@@ -1,6 +1,6 @@
 export interface Recipe {
-  name: string;
-  description?: string;
-  url: string;
-  imagePath?: string;
+  name?: string | null;
+  description?: string | null;
+  url?: string | null;
+  imagePath?: string | null;
 }

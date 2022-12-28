@@ -20,6 +20,8 @@ export class RecipeListComponent {
   showForm: boolean = false;
   preview: string = '';
   recipeForm!: FormGroup;
+  showDetail: boolean = false;
+  recipe!: Recipe;
 
   constructor(
     private router: Router,
@@ -42,9 +44,9 @@ export class RecipeListComponent {
     });
   }
 
-  ingredients = new FormArray([]);
-
-  addIngredient() {
-    this.ingredients.push(new FormControl(''));
+  showRecipeDetail(e: Recipe) {
+    this.showDetail = true;
+    this.showForm = false;
+    this.recipe = e;
   }
 }

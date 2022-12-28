@@ -4,14 +4,18 @@
       New Recipe
     </button>
     <app-recipe-item
+      (itemClick)="showRecipeDetail($event)"
       *ngFor="let item of recipes; let i = index"
       [recipe]="item"
       [index]="i"
     ></app-recipe-item>
   </div>
 
-  <div class="col-xl-6 col-lg-6 col-md-6" *ngIf="showForm">
-    <form [formGroup]="recipeForm" (ngSubmit)="addRecipe()">
+  <div class="col-xl-6 col-lg-6 col-md-6">
+    <div *ngIf="showDetail">
+      <app-recipe-detail [recipe]="recipe"></app-recipe-detail>
+    </div>
+    <form [formGroup]="recipeForm" (ngSubmit)="addRecipe()" *ngIf="showForm">
       <div class="row">
         <div class="col-xs-12">
           <button
