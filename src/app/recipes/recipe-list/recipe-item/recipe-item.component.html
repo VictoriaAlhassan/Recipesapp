@@ -1,5 +1,4 @@
 <a
-  (click)="onItemClick()"
   style="cursor: pointer"
   [routerLink]="[index]"
   routerLinkActive="active"
@@ -11,7 +10,7 @@
   </div>
   <span class="pull-right">
     <img
-      [src]="recipe.imagePath"
+      [src]="recipe.url"
       alt="{{ recipe.name }}"
       class="img-responsive"
       style="max-height: 50px"

@@ -1,1 +1,13 @@
-<p>auth works!</p>
+<div
+  style="
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  "
+  *ngIf="authService.loading"
+>
+  <span class="loader"></span>
+</div>
+<app-login></app-login>

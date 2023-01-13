@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeItemComponent } from './recipe-item/recipe-item.component';
 import {
@@ -9,44 +9,37 @@ import {
   Validators,
 } from '@angular/forms';
 import { Recipe } from 'src/app/recipe';
+import { RecipeService } from 'src/app/recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css'],
 })
-export class RecipeListComponent {
+export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
-  showForm: boolean = false;
-  preview: string = '';
-  recipeForm!: FormGroup;
-  showDetail: boolean = false;
-  recipe!: Recipe;
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private recipeService: RecipeService,
+    private route: ActivatedRoute
   ) {
-    this.recipeForm = this.createRecipeForm();
+    // console.log('this is recipe list');
+  }
+  ngOnInit(): void {
+    this.getRecipes();
+    this.recipeService.onFetchData();
+    // this.recipes = this.route.snapshot.data['/recipes'];
   }
 
-  addRecipe() {
-    this.recipes.push(this.recipeForm.value);
-    console.log(this.recipeForm.value);
+  newRecipe() {
+    this.router.navigate(['/recipes/new']);
   }
 
-  createRecipeForm(): FormGroup {
-    return this.formBuilder.group({
-      name: ['', Validators.required],
-      url: ['', Validators.required],
-      description: ['', Validators.required],
+  getRecipes() {
+    this.recipeService.recipesChanged.subscribe((recipes) => {
+      this.recipes = recipes;
+      console.log(recipes);
     });
-  }
-
-  showRecipeDetail(e: Recipe) {
-    this.showDetail = true;
-    this.showForm = false;
-    this.recipe = e;
   }
 }

@@ -5,16 +5,20 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a>Recipes</a></li>
-        <li>
+        <li *ngIf="authService.isLoggedIn">
+          <a style="cursor: pointer" (click)="onNavigate('recipes')">Recipes</a>
+        </li>
+        <li *ngIf="!authService.isLoggedIn">
           <a>Authenticate</a>
         </li>
-        <li>
-          <a>Shopping List</a>
+        <li *ngIf="authService.isLoggedIn">
+          <a style="cursor: pointer" (click)="onNavigate('shopping-list')"
+            >Shopping List</a
+          >
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+      <ul *ngIf="authService.isLoggedIn" class="nav navbar-nav navbar-right">
+        <li (click)="authService.logOut()">
           <a style="cursor: pointer">Logout</a>
         </li>
         <li class="dropdown" appDropdown>
@@ -23,10 +27,10 @@
           ></a>
           <ul class="dropdown-menu">
             <li>
-              <a style="cursor: pointer">Save Data</a>
+              <a style="cursor: pointer" (click)="saveRecipes()">Save Data</a>
             </li>
             <li>
-              <a style="cursor: pointer">Fetch Data</a>
+              <a style="cursor: pointer" (click)="fetchRecipes()">Fetch Data</a>
             </li>
           </ul>
         </li>

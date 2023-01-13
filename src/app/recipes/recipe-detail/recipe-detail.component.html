@@ -1,3 +1,7 @@
+<div *ngIf="errorMessage">
+  <h3>{{ errorMessage }}</h3>
+</div>
+
 <div class="row" *ngIf="recipe">
   <div class="col-xs-12">
     <img
@@ -14,14 +18,27 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <div class="btn-group">
-      <button class="btn btn-primary dropdown-toggle" appDropdown>
+    <div class="btn-group" appDropdown>
+      <button class="btn btn-primary dropdown-toggle">
         Manage Recipe <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-        <li><a style="cursor: pointer">To Shopping list</a></li>
-        <li><a style="cursor: pointer">Edit Recipe</a></li>
-        <li><a style="cursor: pointer">Delete Recipe</a></li>
+        <li>
+          <a style="cursor: pointer" (click)="toShoppingList()"
+            >To Shopping list</a
+          >
+        </li>
+        <li>
+          <a
+            style="cursor: pointer"
+            [routerLink]="[id + '/edit']"
+            (click)="recipeEdit()"
+            >Edit Recipe</a
+          >
+        </li>
+        <li>
+          <a style="cursor: pointer" (click)="removeRecipe()">Delete Recipe</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -35,8 +52,11 @@
 <div class="row">
   <div class="col-xs-12">
     <ul class="list-group">
-      <li class="list-group-item">
-        <!-- ingredient name and quantity -->
+      <li
+        class="list-group-item"
+        *ngFor="let ingredient of recipe?.ingredients"
+      >
+        {{ ingredient.name }} ({{ ingredient.amount }})
       </li>
     </ul>
   </div>
